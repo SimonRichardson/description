@@ -8,10 +8,11 @@ import (
 
 	"github.com/juju/names/v6"
 	jc "github.com/juju/testing/checkers"
-	"github.com/rs/xid"
 	gc "gopkg.in/check.v1"
 	"gopkg.in/yaml.v2"
 )
+
+const testSecretID = "0123456789abcdefghig"
 
 type SecretsSerializationSuite struct {
 	SliceSerializationSuite
@@ -32,12 +33,11 @@ func (s *SecretsSerializationSuite) SetUpTest(c *gc.C) {
 }
 
 func testSecretArgs() SecretArgs {
-	id := xid.New().String()
 	created := time.Now().UTC()
 	updated := created.Add(time.Hour)
 	nextRotate := created.Add(2 * time.Hour)
 	return SecretArgs{
-		ID:                     id,
+		ID:                     testSecretID,
 		Version:                1,
 		Description:            "a secret",
 		Label:                  "secret label",
@@ -105,9 +105,8 @@ func testSecretConsumerArgs() []SecretConsumerArgs {
 }
 
 func testSecretRemoteConsumerArgs() []SecretRemoteConsumerArgs {
-	id := xid.New().String()
 	return []SecretRemoteConsumerArgs{{
-		ID:              id,
+		ID:              testSecretID,
 		Consumer:        names.NewApplicationTag("remote-mariadb"),
 		CurrentRevision: 666,
 	}}

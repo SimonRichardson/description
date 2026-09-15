@@ -7,7 +7,6 @@ require (
 	github.com/juju/names/v6 v6.0.0-20250318090139-ec8d71d906f5
 	github.com/juju/schema v1.2.0
 	github.com/juju/testing v1.2.0
-	github.com/rs/xid v1.6.0
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c
 	gopkg.in/yaml.v2 v2.4.0
 )

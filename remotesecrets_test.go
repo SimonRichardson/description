@@ -6,7 +6,6 @@ package description
 import (
 	"github.com/juju/names/v6"
 	jc "github.com/juju/testing/checkers"
-	"github.com/rs/xid"
 	gc "gopkg.in/check.v1"
 	"gopkg.in/yaml.v2"
 )
@@ -30,9 +29,8 @@ func (s *RemoteSecretsSerializationSuite) SetUpTest(c *gc.C) {
 }
 
 func testRemoteSecretArgs() RemoteSecretArgs {
-	id := xid.New().String()
 	return RemoteSecretArgs{
-		ID:              id,
+		ID:              testSecretID,
 		SourceUUID:      "model-uuid",
 		Consumer:        names.NewApplicationTag("mariadb"),
 		Label:           "secret label",

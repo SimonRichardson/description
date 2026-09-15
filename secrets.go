@@ -5,13 +5,15 @@ package description
 
 import (
 	"fmt"
+	"regexp"
 	"time"
 
 	"github.com/juju/errors"
 	"github.com/juju/names/v6"
 	"github.com/juju/schema"
-	"github.com/rs/xid"
 )
+
+var validXID = regexp.MustCompile(`^[0-9a-v]{19}[0g]$`)
 
 // Secret represents a secret.
 type Secret interface {
@@ -278,8 +280,8 @@ func (i *secret) Validate() error {
 	if i.ID_ == "" {
 		return errors.NotValidf("secret missing id")
 	}
-	if _, err := xid.FromString(i.ID_); err != nil {
-		return errors.Wrap(err, errors.NotValidf("secret ID %q", i.ID_))
+	if !validXID.MatchString(i.ID_) {
+		return errors.NotValidf("secret ID %q", i.ID_)
 	}
 	if _, err := i.Owner(); err != nil {
 		return errors.Wrap(err, errors.NotValidf("secret %q invalid owner", i.ID_))

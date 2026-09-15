@@ -7,7 +7,6 @@ import (
 	"github.com/juju/errors"
 	"github.com/juju/names/v6"
 	"github.com/juju/schema"
-	"github.com/rs/xid"
 )
 
 // RemoteSecret represents consumer info for a remote secret.
@@ -104,8 +103,8 @@ func (i *remoteSecret) Validate() error {
 	if i.ID_ == "" {
 		return errors.NotValidf("remote secret missing id")
 	}
-	if _, err := xid.FromString(i.ID_); err != nil {
-		return errors.Wrap(err, errors.NotValidf("remote secret ID %q", i.ID_))
+	if !validXID.MatchString(i.ID_) {
+		return errors.NotValidf("remote secret ID %q", i.ID_)
 	}
 	if _, err := i.Consumer(); err != nil {
 		return errors.Wrap(err, errors.NotValidf("remote secret %q invalid consumer", i.ID_))
